@@ -29,7 +29,8 @@ class UserRegistrationView(APIView):
                 'user': {
                     'email': user.email,
                     'full_name': user.full_name,
-                    'language': user.language
+                    'language': user.language,
+                    'role': user.role
                 },
                 'token': token
             }, status=status.HTTP_201_CREATED)
@@ -75,7 +76,8 @@ class UserLoginView(APIView):
                 'message': 'Login successful',
                 'user': {
                     'email': admin_user.email,
-                    'full_name': admin_user.full_name
+                    'full_name': admin_user.full_name,
+                    
                 },
                 'token': token  # Make sure to include this
             }, status=status.HTTP_200_OK)
@@ -89,7 +91,8 @@ class UserLoginView(APIView):
                 'message': 'Login successful',
                 'user': {
                     'email': user.email,
-                    'full_name': user.full_name
+                    'full_name': user.full_name,
+                    'role': user.role
                 },
                 'token': token
             }, status=status.HTTP_200_OK)
@@ -141,6 +144,7 @@ class ProtectedTestView(APIView):
             'message': 'This is a protected view',
             'user': {
                 'email': request.user.email,
-                'full_name': request.user.full_name
+                'full_name': request.user.full_name,
+                'role': request.user.role
             }
         })

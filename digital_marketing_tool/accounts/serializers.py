@@ -13,11 +13,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['email', 'full_name','language', 'password', 'confirm_password']
+        fields = ['email', 'full_name','language', 'role','password', 'confirm_password']
         extra_kwargs = {
             'full_name': {'required': True},
             'email': {'required': True},
-            'language': {'required': True}
+            'language': {'required': True},
+            'role': {'required': True}
         }
     
     def validate(self, attrs):
@@ -31,14 +32,15 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             full_name=validated_data['full_name'],
             password=validated_data['password'],
-            language=validated_data.get('language', 'en')
+            language=validated_data.get('language', 'en'),
+            role=validated_data.get('role', 1)
         )
         return user
     
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'full_name', 'password', 'language', 'is_active', 'created_at']
+        fields = ['id', 'email', 'full_name', 'password', 'language', 'role','is_active', 'created_at']
         extra_kwargs = {
             'password': {'read_only': True}  # This shows the hashed password
         }
